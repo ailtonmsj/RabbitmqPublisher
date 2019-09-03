@@ -8,5 +8,5 @@
 ##### Http post method on:
 ##### localhost:7070/send/
 ##### On Body attributes:
-##### message = <YOUR MESSAGE>
+##### message = \<YOUR MESSAGE\>
 
