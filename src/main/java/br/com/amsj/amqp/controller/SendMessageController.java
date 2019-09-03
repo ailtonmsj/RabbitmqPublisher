@@ -1,4 +1,4 @@
-package br.com.amsj.amqp.service;
+package br.com.amsj.amqp.controller;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/")
-public class SendMessageService {
+public class SendMessageController {
 	
 	@Autowired
 	RabbitTemplate rabbitTemplate;	
