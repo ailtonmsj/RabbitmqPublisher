@@ -2,6 +2,8 @@ package br.com.amsj.amqp.controller;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,8 +20,18 @@ public class SendMessageController {
 	final String ROUTING_KEY = "route_1";
 	
 	@RequestMapping(value="/send/", method=RequestMethod.POST)
-	public void sendMessage(@RequestBody String message) {
+	public ResponseEntity<Void> sendMessage(@RequestBody String message) {
 		
-		rabbitTemplate.convertAndSend(EXCHANGE_NAME, ROUTING_KEY, message);
+		ResponseEntity<Void> responseEntity = null;
+		
+		try {
+			rabbitTemplate.convertAndSend(EXCHANGE_NAME, ROUTING_KEY, message);
+		}catch (Exception e) {
+			e.printStackTrace();
+			responseEntity = new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
+		
+		return responseEntity; 
 	}
 }
