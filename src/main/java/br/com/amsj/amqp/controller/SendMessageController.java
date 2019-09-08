@@ -26,11 +26,12 @@ public class SendMessageController {
 		
 		try {
 			rabbitTemplate.convertAndSend(EXCHANGE_NAME, ROUTING_KEY, message);
+			responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
 		}catch (Exception e) {
 			e.printStackTrace();
 			responseEntity = new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
+		
 		
 		return responseEntity; 
 	}
