@@ -2,6 +2,7 @@ package br.com.amsj.amqp.controller;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,11 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class SendMessageController {
 	
+	SendMessageController(@Value("${amqp.testExchange1}") String exchangeName, 
+			@Value("${amqp.route1}")String routingKey){
+		
+		this.exchangeName = exchangeName;
+		this.routingKey = routingKey;
+	}
+	
 	@Autowired
 	RabbitTemplate rabbitTemplate;	
 	
-	final String EXCHANGE_NAME = "test_exchange_1";
-	final String ROUTING_KEY = "route_1";
+	private final String exchangeName;
+	private final String routingKey;
 	
 	@RequestMapping(value="/send/", method=RequestMethod.POST)
 	public ResponseEntity<Void> sendMessage(@RequestBody String message) {
@@ -25,7 +33,7 @@ public class SendMessageController {
 		ResponseEntity<Void> responseEntity = null;
 		
 		try {
-			rabbitTemplate.convertAndSend(EXCHANGE_NAME, ROUTING_KEY, message);
+			rabbitTemplate.convertAndSend(exchangeName, routingKey, message);
 			responseEntity = new ResponseEntity<>(HttpStatus.CREATED);
 		}catch (Exception e) {
 			e.printStackTrace();
