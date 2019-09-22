@@ -1,0 +1,49 @@
+## Server port configuration
+server:
+  port: 7070
+
+## configuration for rabbitmq
+
+amqp:
+  configuration:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest1
+    
+## queues
+
+  queue:
+    queueOne:
+      name: testQueueOne
+      durable: false
+    
+    queueTwo:
+      name: testQueueTwo
+      durable: false
+
+    queueThree:
+      name: testQueueThree
+      durable: false
+      
+## routingkeys
+
+  routingkey:
+    routeOne: routeOne
+    routeTwo: routeTwo
+    routeThree: routeThree     
+      
+
+#exchanges
+
+  exchange:
+    exchangeOne:
+      name: testExchangeOne
+      isDurable: false
+      isAutoDelete: false
+    exchangeTwo:
+      name: testExchangeTwo
+      isDurable: false
+      isAutoDelete: false
+
+
